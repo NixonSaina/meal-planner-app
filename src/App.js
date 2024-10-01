@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+// /src/App.js
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Planner from "./pages/Planner";
+import Shopping from "./pages/Shopping";
 
 function App() {
+  const [mealPlan, setMealPlan] = useState([]);
+
+  const addToPlanner = (recipe) => {
+    setMealPlan([...mealPlan, recipe]);
+  };
+
+  const removeFromPlanner = (index) => {
+    const updatedPlan = mealPlan.filter((_, i) => i !== index);
+    setMealPlan(updatedPlan);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/planner">Meal Planner</Link> |{" "}
+        <Link to="/shopping">Shopping List</Link>
+      </nav>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home addToPlanner={addToPlanner} mealPlan={mealPlan} />}
+        />
+        <Route
+          path="/planner"
+          element={<Planner mealPlan={mealPlan} removeFromPlanner={removeFromPlanner} />}
+        />
+        <Route path="/shopping" element={<Shopping mealPlan={mealPlan} />} />
+      </Routes>
+    </Router>
   );
 }
 
