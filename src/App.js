@@ -30,7 +30,13 @@ function App() {
         />
         <Route
           path="/planner"
-          element={<Planner mealPlan={mealPlan} removeFromPlanner={removeFromPlanner} />}
+          element={
+            <Planner
+              mealPlan={mealPlan}
+              addToPlanner={addToPlanner}
+              removeFromPlanner={removeFromPlanner}
+            />
+          }
         />
         <Route path="/shopping" element={<Shopping mealPlan={mealPlan} />} />
       </Routes>
